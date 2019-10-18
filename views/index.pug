@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  .container
+
+    .header
+      h1 Todo List
+      h1(class='lead') Node + Express + Pug + Postgres
+
+    .todo-form
+      form(method='POST', action='/create_todo')
+
+        .form-group
+          input(type='text',
+                class='form-control input-lg'
+                placeholder='Enter text...',
+                name='text')
+
+        input(type='submit',
+              class='btn btn-primary btn-lg btn-block',
+              value='Add Todo')
+
+    .todo-list
+      ul
+        each todo in todos
+          li: h3: label
+            form(method='POST', action='/complete_todo')
+              input(class='lead',
+                    type='checkbox',
+                    value=todo.id,
+                    name='id',
+                    checked=todo.complete
+                    onChange='this.form.submit()')
+              | &nbsp;
+              = todo.text
